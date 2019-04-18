@@ -11,8 +11,8 @@ import javax.swing.Timer;
 public class LeagueInvaders {
 	private static final Component KeyListener = null;
 	JFrame frame;
-	final int wi = 500;
-	final int he = 800;
+	public final int wi = 500;
+	public final int he = 800;
 	Timer time;
 	GamePanel gpan;
 	public static void main(String[] args) {
@@ -22,13 +22,14 @@ public class LeagueInvaders {
 	LeagueInvaders(){
 		frame = new JFrame();
 		frame.setSize(wi, he);
+		
 		gpan = new GamePanel();
 	}
 	void setup(){
 	
 	frame.add(gpan);
 	frame.getContentPane().setPreferredSize(new Dimension(wi, he));
-	
+	frame.addKeyListener(gpan);
     frame.pack();
 	frame.setVisible(true);
 	setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

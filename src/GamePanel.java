@@ -9,11 +9,15 @@ import javax.swing.Timer;
 
 public class GamePanel extends JPanel implements ActionListener, KeyListener{
 		Timer time;
+		GameObject gameobj;
 		GamePanel(){
 			time = new Timer(1000/60, this);
+			gameobj = new GameObject(1,1,1,1);
 		}
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
+			
+			gameobj.update();
 			repaint();
 			// TODO Auto-generated method stub
 			
@@ -21,8 +25,8 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener{
 		 @Override
 
 		 public void paintComponent(Graphics g){
-			 g.fillRect(10, 10, 100, 100);
-		                 
+			 
+		         gameobj.draw(g);        
 
 		         }
 	void startGame(){
