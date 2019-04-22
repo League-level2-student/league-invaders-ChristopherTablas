@@ -1,4 +1,5 @@
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -10,18 +11,20 @@ import javax.swing.Timer;
 
 public class GamePanel extends JPanel implements ActionListener, KeyListener{
 		Timer time;
-		GameObject gameobj;
 		final int MENU_STATE = 0;
 		final int GAME_STATE = 1;
 		final int END_STATE = 2;
 		int currentState = MENU_STATE;
+		Font titleFont;
+		Font littleFont;
 		GamePanel(){
 			time = new Timer(1000/60, this);
-			gameobj = new GameObject(1,1,1,1);
+			titleFont = new Font("Arial", Font.PLAIN, 48);
+			littleFont = new Font("Arial", Font.PLAIN, 28);
 		}
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
-			gameobj.update();
+			
 			repaint();
 			if(currentState == MENU_STATE){
                 updateMenuState();
@@ -37,8 +40,7 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener{
 		}
 		 @Override
 
-		 public void paintComponent(Graphics g){
-		         gameobj.draw(g);        
+		 public void paintComponent(Graphics g){       
 		         if(currentState == MENU_STATE){
 		                drawMenuState(g);
 		        }else if(currentState == GAME_STATE){
@@ -55,6 +57,19 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener{
 	@Override
 	public void keyPressed(KeyEvent arg0) {
 		System.out.println("test 3");
+		if(arg0.getKeyCode() == KeyEvent.VK_ENTER){
+
+            currentState = currentState + 1;
+
+    }
+		
+		if(currentState > END_STATE){
+
+            currentState = MENU_STATE;
+
+    }
+
+
 		// TODO Auto-generated method stub
 		
 	}
@@ -83,14 +98,29 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener{
 	}
 	void drawMenuState(Graphics g){
 		g.setColor(Color.BLUE);
-
 		g.fillRect(0, 0, 500, 800);    
+		g.setFont(titleFont);
+		g.setColor(Color.YELLOW);
+		g.drawString("LEAGUE INVADERS", 25, 200);
+		g.setFont(littleFont);
+		g.drawString("Press ENTER to start", 125, 400);
+		g.drawString("Press SPACE for instructions", 80, 500);
+		
 	}
 	void drawGameState(Graphics g){
 		g.setColor(Color.BLACK);
+
+		g.fillRect(0, 0, 500, 800);   
 	}
 	void drawEndState(Graphics g){
 		g.setColor(Color.RED);
+		g.fillRect(0, 0, 500, 800);   
+		g.setFont(titleFont);
+		g.setColor(Color.black);
+		g.drawString("Game Over", 120, 200);
+		g.setFont(littleFont);
+		g.drawString("You killed " + " enemies", 120, 350);
+		g.drawString("Press ENTER to restart", 100, 500);
 	}
 	
 	}
