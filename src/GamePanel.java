@@ -58,6 +58,9 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener{
 		}
 	@Override
 	public void keyPressed(KeyEvent arg0) {
+		if(arg0.getKeyCode() == KeyEvent.VK_SPACE){
+			 objman.addProjectile(new Projectile(rocket.x + 20, rocket.y, 10, 10));
+		}
 		if(arg0.getKeyCode() == KeyEvent.VK_LEFT){
 			
 			rocket.left = true;
@@ -124,6 +127,7 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener{
 	}
 	void updateGameState(){
 		objman.update();
+		objman.manageEnemies();
 		
 	}
 	void updateEndState(){

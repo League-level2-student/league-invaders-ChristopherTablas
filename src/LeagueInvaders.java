@@ -11,7 +11,7 @@ import javax.swing.Timer;
 public class LeagueInvaders {
 	private static final Component KeyListener = null;
 	JFrame frame;
-	public final int wi = 500;
+	public final static int wi = 500;
 	public final int he = 800;
 	Timer time;
 	GamePanel gpan;

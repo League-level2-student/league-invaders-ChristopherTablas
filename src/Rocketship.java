@@ -12,6 +12,7 @@ public class Rocketship extends GameObject {
 		speed = 5;
 	}
 	void update(){
+		super.update();
 		if(up){
 			y -= speed;
 		}
