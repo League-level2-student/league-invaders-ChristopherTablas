@@ -5,11 +5,14 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
 
+import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 
-public class GamePanel extends JPanel implements ActionListener, KeyListener{
+public class GamePanel extends JPanel  implements ActionListener, KeyListener{
 		Timer time;
 		final int MENU_STATE = 0;
 		final int GAME_STATE = 1;
@@ -19,10 +22,36 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener{
 		int currentState = MENU_STATE;
 		Font titleFont;
 		Font littleFont;
+		 public static BufferedImage alienImg;
+
+	        public static BufferedImage rocketImg;
+
+	        public static BufferedImage bulletImg;
+
+	        public static BufferedImage spaceImg;
+
+
 		GamePanel(){
 			time = new Timer(1000/60, this);
 			titleFont = new Font("Arial", Font.PLAIN, 48);
 			littleFont = new Font("Arial", Font.PLAIN, 28);
+			  try {
+
+	                alienImg = ImageIO.read(this.getClass().getResourceAsStream("alien.png"));
+
+	                rocketImg = ImageIO.read(this.getClass().getResourceAsStream("rocket.png"));
+
+	                bulletImg = ImageIO.read(this.getClass().getResourceAsStream("bullet.png"));
+
+	                spaceImg = ImageIO.read(this.getClass().getResourceAsStream("space.png"));
+
+	        } catch (IOException e) {
+
+	                // TODO Auto-generated catch block
+
+	                e.printStackTrace();
+
+	        }
 		}
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
@@ -79,11 +108,12 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener{
 			rocket.up =true;
 		}
 		
-		System.out.println("test 3");
 		if(arg0.getKeyCode() == KeyEvent.VK_ENTER){
-
             currentState = currentState + 1;
-
+            if(currentState == GAME_STATE){
+            	rocket = new Rocketship(250,700,50,50);
+            	objman = new ObjectManager(rocket);
+            }
     }
 		
 		if(currentState > END_STATE){
@@ -117,7 +147,6 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener{
 	}
 	@Override
 	public void keyTyped(KeyEvent arg0) {
-		System.out.println("test 1");
 		// TODO Auto-generated method stub
 		
 	}
@@ -128,7 +157,11 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener{
 	void updateGameState(){
 		objman.update();
 		objman.manageEnemies();
-		
+		objman.checkCollision();
+		objman.purgeObjects();
+		if(rocket.isAlive == false){
+			currentState = END_STATE;
+		}
 	}
 	void updateEndState(){
 		
@@ -157,7 +190,7 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener{
 		g.setColor(Color.black);
 		g.drawString("Game Over", 120, 200);
 		g.setFont(littleFont);
-		g.drawString("You killed " + " enemies", 120, 350);
+		g.drawString("You killed "  + " enemies", 120, 350);
 		g.drawString("Press ENTER to restart", 100, 500);
 	}
 	
