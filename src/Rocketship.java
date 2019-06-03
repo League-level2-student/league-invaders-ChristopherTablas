@@ -9,7 +9,7 @@ public class Rocketship extends GameObject {
 	boolean right = false;
 	Rocketship( int x , int y, int width , int height ){
 	super( x , y,  width, height);
-		speed = 5;
+		speed = 8;
 	}
 	void update(){
 		super.update();
@@ -24,6 +24,18 @@ public class Rocketship extends GameObject {
 		}
 		if(right){
 			x += speed;
+		}
+		if(x<0){
+			x= x+8;
+		}
+		if(x>450){
+			x= x-8;
+		}
+		if(y<0){
+			y = y+8;
+		}
+		if(y>750){
+			y = y-8;
 		}
 	}
 	void draw(Graphics g){

@@ -9,6 +9,7 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 
@@ -22,37 +23,36 @@ public class GamePanel extends JPanel  implements ActionListener, KeyListener{
 		int currentState = MENU_STATE;
 		Font titleFont;
 		Font littleFont;
-		 public static BufferedImage alienImg;
-
-	        public static BufferedImage rocketImg;
-
-	        public static BufferedImage bulletImg;
-
-	        public static BufferedImage spaceImg;
+		public static BufferedImage alienImg;
+	    public static BufferedImage rocketImg;
+	    public static BufferedImage bulletImg;
+	    public static BufferedImage spaceImg;
 
 
 		GamePanel(){
 			time = new Timer(1000/60, this);
 			titleFont = new Font("Arial", Font.PLAIN, 48);
 			littleFont = new Font("Arial", Font.PLAIN, 28);
-			  try {
+			try {
 
-	                alienImg = ImageIO.read(this.getClass().getResourceAsStream("alien.png"));
+                alienImg = ImageIO.read(this.getClass().getResourceAsStream("alien.png"));
 
-	                rocketImg = ImageIO.read(this.getClass().getResourceAsStream("rocket.png"));
+                rocketImg = ImageIO.read(this.getClass().getResourceAsStream("rocket.png"));
 
-	                bulletImg = ImageIO.read(this.getClass().getResourceAsStream("bullet.png"));
+                bulletImg = ImageIO.read(this.getClass().getResourceAsStream("bullet.png"));
 
-	                spaceImg = ImageIO.read(this.getClass().getResourceAsStream("space.png"));
+                spaceImg = ImageIO.read(this.getClass().getResourceAsStream("space.png"));
 
-	        } catch (IOException e) {
+        } catch (IOException e) {
 
-	                // TODO Auto-generated catch block
+                // TODO Auto-generated catch block
 
-	                e.printStackTrace();
+                e.printStackTrace();
 
-	        }
-		}
+        }
+			}
+		
+		
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
 			
@@ -89,6 +89,10 @@ public class GamePanel extends JPanel  implements ActionListener, KeyListener{
 	public void keyPressed(KeyEvent arg0) {
 		if(arg0.getKeyCode() == KeyEvent.VK_SPACE){
 			 objman.addProjectile(new Projectile(rocket.x + 20, rocket.y, 10, 10));
+			 if(currentState == MENU_STATE){
+	            	JOptionPane.showMessageDialog(null, "Use arrow keys to move. Press SPACE to fire. Try not to die");;
+	            }
+
 		}
 		if(arg0.getKeyCode() == KeyEvent.VK_LEFT){
 			
@@ -178,8 +182,8 @@ public class GamePanel extends JPanel  implements ActionListener, KeyListener{
 		
 	}
 	void drawGameState(Graphics g){
-		g.setColor(Color.BLACK);
-		g.fillRect(0, 0, 500, 800); 
+
+        g.drawImage(GamePanel.spaceImg, 0, 0, 500, 800, null);
 		objman.draw(g);
 		  
 	}
@@ -190,7 +194,7 @@ public class GamePanel extends JPanel  implements ActionListener, KeyListener{
 		g.setColor(Color.black);
 		g.drawString("Game Over", 120, 200);
 		g.setFont(littleFont);
-		g.drawString("You killed "  + " enemies", 120, 350);
+		g.drawString("You killed " + objman.score + " enemies", 120, 350);
 		g.drawString("Press ENTER to restart", 100, 500);
 	}
 	
